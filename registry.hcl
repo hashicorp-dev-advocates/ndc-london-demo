@@ -43,27 +43,3 @@ container "registry" {
     host   = 443
   }
 }
-
-// k8s_config "registry" {
-//   cluster = "k8s_cluster.kubernetes"
-//   paths = [
-//     "./files/k8s_config/registry.yaml",
-//   ]
-
-//   wait_until_ready = true
-// }
-
-// k8s_ingress "registry" {
-//   cluster = "k8s_cluster.kubernetes"
-//   service = "registry"
-
-//   network {
-//     name = "network.cloud"
-//   }
-
-//   port {
-//     local  = 5000
-//     remote = 5000
-//     host   = 5000
-//   }
-// }

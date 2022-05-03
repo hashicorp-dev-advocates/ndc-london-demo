@@ -75,27 +75,3 @@ container "gogs" {
     host   = 3000
   }
 }
-
-// k8s_config "git" {
-//   cluster = "k8s_cluster.kubernetes"
-//   paths = [
-//     "./files/k8s_config/git.yaml",
-//   ]
-
-//   wait_until_ready = true
-// }
-
-// k8s_ingress "git" {
-//   cluster = "k8s_cluster.kubernetes"
-//   service = "git"
-
-//   network {
-//     name = "network.cloud"
-//   }
-
-//   port {
-//     local  = 3000
-//     remote = 3000
-//     host   = 3000
-//   }
-// }

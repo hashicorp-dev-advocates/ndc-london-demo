@@ -35,30 +35,3 @@ k8s_ingress "waypoint" {
     host   = 9702
   }
 }
-
-// template "waypoint_login" {
-//   source      = <<EOF
-// waypoint login --from-kubernetes localhost:9701
-//   EOF
-//   destination = "${data("waypoint")}/login.sh"
-// }
-
-exec_local "waypoint_login" {
-  depends_on = [
-    "helm.waypoint",
-    "k8s_ingress.waypoint",
-  ]
-
-  cmd = "waypoint"
-  args = [
-    "login",
-    "--from-kubernetes",
-    "localhost:9701"
-  ]
-
-  // cmd = "bash"
-  // args = [
-  //   "-c",
-  //   "${data("waypoint")}/login.sh"
-  // ]
-}

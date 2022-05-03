@@ -1,1 +1,3 @@
 files/gogs/payments/.git
+waypoint-restore.db.lock
+data.db
