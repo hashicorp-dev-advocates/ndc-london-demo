@@ -1,21 +1,21 @@
-exec_local "registry_certs" {
-  cmd = "shipyard"
-  args = [
-    "connector",
-    "generate-certs",
-    "${data("registry_certs")}",
-    "--leaf",
-    "--root-ca",
-    "${shipyard()}/certs/root.cert",
-    "--root-key",
-    "${shipyard()}/certs/root.key",
-    "--ip-address",
-    "10.10.0.10"
-  ]
-}
+// exec_local "registry_certs" {
+//   cmd = "shipyard"
+//   args = [
+//     "connector",
+//     "generate-certs",
+//     "${data("registry_certs")}",
+//     "--leaf",
+//     "--root-ca",
+//     "${shipyard()}/certs/root.cert",
+//     "--root-key",
+//     "${shipyard()}/certs/root.key",
+//     "--ip-address",
+//     "10.10.0.10"
+//   ]
+// }
 
 container "registry" {
-  depends_on = ["exec_local.registry_certs"]
+  // depends_on = ["exec_local.registry_certs"]
 
   network {
     name       = "network.cloud"
@@ -27,14 +27,14 @@ container "registry" {
   }
 
   volume {
-    source      = "${data("registry_certs")}"
+    source      = "./files/keys"
     destination = "/certs"
   }
 
   env_var = {
     REGISTRY_HTTP_ADDR            = "0.0.0.0:443"
-    REGISTRY_HTTP_TLS_CERTIFICATE = "/certs/leaf.cert"
-    REGISTRY_HTTP_TLS_KEY         = "/certs/leaf.key"
+    REGISTRY_HTTP_TLS_CERTIFICATE = "/certs/registry.cert"
+    REGISTRY_HTTP_TLS_KEY         = "/certs/registry.key"
   }
 
   port {

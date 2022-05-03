@@ -5,6 +5,7 @@ runner {
 
   data_source "git" {
     url = "git@10.10.0.20:22/hashicraft/payments.git"
+    ref = "main"
     key = <<EOF
 -----BEGIN RSA PRIVATE KEY-----
 MIIJKQIBAAKCAgEArg2qy6HmFuoUppBi+hpHpxrCNcxY/mz5iOjsNK+VaHrfuL0f
@@ -57,7 +58,7 @@ mfcGHVaNA8rYQILYJ+YpkS2bhXjxZK68MX8a7kO3FIuj58RxukJ64rDagDbt0RSC
 85ZL/WyQ1XCEe8aLw4G5rP9glyPq53OTDBfRao1Tlb34mUd5PMz3I7b2nbK8SEm2
 cLOsKffK9/imRuchYfZTlwVkaDo56T0v7zEo87kc3qemI5AK0lH7i+aBKBih
 -----END RSA PRIVATE KEY-----
-    EOF
+EOF
   }
 }
 

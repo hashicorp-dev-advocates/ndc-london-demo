@@ -1,21 +1,21 @@
-exec_local "waypoint_certs" {
-  cmd = "shipyard"
-  args = [
-    "connector",
-    "generate-certs",
-    "${data("waypoint_certs")}",
-    "--leaf",
-    "--root-ca",
-    "${shipyard()}/certs/root.cert",
-    "--root-key",
-    "${shipyard()}/certs/root.key",
-    "--dns-name",
-    "waypoint"
-  ]
-}
+// exec_local "waypoint_certs" {
+//   cmd = "shipyard"
+//   args = [
+//     "connector",
+//     "generate-certs",
+//     "${data("waypoint_certs")}",
+//     "--leaf",
+//     "--root-ca",
+//     "${shipyard()}/certs/root.cert",
+//     "--root-key",
+//     "${shipyard()}/certs/root.key",
+//     "--dns-name",
+//     "waypoint"
+//   ]
+// }
 
 exec_remote "waypoint_secrets" {
-  depends_on = ["k8s_cluster.kubernetes", "exec_local.waypoint_certs"]
+  depends_on = ["k8s_cluster.kubernetes"]
 
   image {
     name = "shipyardrun/tools:v0.6.0"
@@ -31,8 +31,8 @@ exec_remote "waypoint_secrets" {
     "secret",
     "generic",
     "waypoint-certs",
-    "--from-file=/certs/leaf.cert",
-    "--from-file=/certs/leaf.key"
+    "--from-file=/certs/waypoint.cert",
+    "--from-file=/certs/waypoint.key"
   ]
 
   volume {
@@ -40,14 +40,14 @@ exec_remote "waypoint_secrets" {
     destination = "/config"
   }
 
-  volume {
-    source      = "${data("waypoint_certs")}"
-    destination = "/certs"
-  }
-
   env {
     key   = "KUBECONFIG"
     value = "/config/kubeconfig-docker.yaml"
+  }
+
+  volume {
+    source      = "./files/keys"
+    destination = "/certs"
   }
 }
 
@@ -59,8 +59,8 @@ helm "waypoint" {
 
   values_string = {
     "server.certs.secretName" = "waypoint-certs"
-    "server.certs.certName"   = "leaf.cert"
-    "server.certs.keyName"    = "leaf.key"
+    "server.certs.certName"   = "waypoint.cert"
+    "server.certs.keyName"    = "waypoint.key"
   }
 }
 
