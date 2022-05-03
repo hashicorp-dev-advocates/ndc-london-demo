@@ -1,15 +1,10 @@
-exec_remote "setup_repo" {
-  target = "container.gogs"
-
-  cmd  = "sh"
-  args = ["-c", "/data/gogs/bin/setup.sh"]
-}
-
 container "gogs" {
   network {
     name       = "network.cloud"
     ip_address = "10.10.0.20"
   }
+
+  entrypoint = ["/data/gogs/bin/setup.sh"]
 
   image {
     name = "gogs/gogs:0.12.6"
@@ -31,8 +26,8 @@ container "gogs" {
   }
 
   volume {
-    source      = "./files/gogs/gogs.db"
-    destination = "/data/gogs/data/gogs.db"
+    source      = "./files/gogs/gogs.db.bak"
+    destination = "/data/gogs/data/gogs.db.bak"
   }
 
   volume {

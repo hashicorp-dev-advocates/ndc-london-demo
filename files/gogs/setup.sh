@@ -1,4 +1,6 @@
 #!/bin/sh
+cp /data/gogs/data/gogs.db.bak /data/gogs/data/gogs.db
+
 cd /data/git/gogs-repositories/hashicraft/payments.git
 rm -rf .git
 git config --global user.email "admin@hashicraft.com"
@@ -7,3 +9,5 @@ git init
 git checkout -b main
 git add . 
 git commit -m "initial commit"
+
+/app/gogs/docker/start.sh
