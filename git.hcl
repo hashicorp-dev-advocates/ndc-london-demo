@@ -39,8 +39,8 @@ container "gogs" {
   }
 
   volume {
-    source      = "./files/setup_gogs_repos.sh"
-    destination = "/data/gogs/bin/setup_gogs_repos.sh"
+    source      = "./files/gogs/setup.sh"
+    destination = "/data/gogs/bin/setup.sh"
   }
 
   volume {
@@ -59,7 +59,7 @@ container "gogs" {
   }
 
   volume {
-    source      = "./files/gogs/payments"
+    source      = "./files/app"
     destination = "/data/git/gogs-repositories/hashicraft/payments.git"
   }
 

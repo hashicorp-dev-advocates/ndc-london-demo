@@ -1,3 +1,4 @@
-files/gogs/payments/.git
+files/app/.git
 waypoint-restore.db.lock
 data.db
+.kube
