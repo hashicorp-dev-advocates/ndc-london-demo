@@ -1,22 +1,4 @@
-// exec_local "registry_certs" {
-//   cmd = "shipyard"
-//   args = [
-//     "connector",
-//     "generate-certs",
-//     "${data("registry_certs")}",
-//     "--leaf",
-//     "--root-ca",
-//     "${shipyard()}/certs/root.cert",
-//     "--root-key",
-//     "${shipyard()}/certs/root.key",
-//     "--ip-address",
-//     "10.10.0.10"
-//   ]
-// }
-
 container "registry" {
-  // depends_on = ["exec_local.registry_certs"]
-
   network {
     name       = "network.cloud"
     ip_address = "10.10.0.10"
