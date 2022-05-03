@@ -1,6 +1,7 @@
 #!/bin/sh
-
-rm -rf .git
+cd /data/git/gogs-repositories/hashicraft/payments.git
+git config --global user.email "admin@hashicraft.com"
+git config --global user.name "Barry"
 git init
 git checkout -b main
 git add . 
