@@ -19,8 +19,14 @@ exec_local "gogs_certs" {
   ]
 }
 
+exec_local "setup_repo" {
+  cmd               = "sh"
+  args              = ["-c", "./files/setup_gogs_repos.sh"]
+  working_directory = "${file_dir()}/files/gogs/payments"
+}
+
 container "gogs" {
-  depends_on = ["exec_local.gogs_certs"]
+  depends_on = ["exec_local.gogs_certs", "exec_local.setup_repo"]
 
   network {
     name       = "network.cloud"
