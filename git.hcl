@@ -1,24 +1,3 @@
-// template "gogs_config" {
-//   source      = "${file("${file_dir()}/files/gogs/app.ini")}"
-//   destination = "${data("gogs_config")}/app.ini"
-// }
-
-// exec_local "gogs_certs" {
-//   cmd = "shipyard"
-//   args = [
-//     "connector",
-//     "generate-certs",
-//     "${data("gogs_certs")}",
-//     "--leaf",
-//     "--root-ca",
-//     "${shipyard()}/certs/root.cert",
-//     "--root-key",
-//     "${shipyard()}/certs/root.key",
-//     "--ip-address",
-//     "10.10.0.20"
-//   ]
-// }
-
 exec_remote "setup_repo" {
   target = "container.gogs"
 
@@ -27,8 +6,6 @@ exec_remote "setup_repo" {
 }
 
 container "gogs" {
-  // depends_on = ["exec_local.gogs_certs"]
-
   network {
     name       = "network.cloud"
     ip_address = "10.10.0.20"
@@ -62,16 +39,6 @@ container "gogs" {
     source      = "./files/keys/authorized_keys"
     destination = "/data/git/.ssh/authorized_keys"
   }
-
-  // volume {
-  //   source      = "./files/keys/id_rsa"
-  //   destination = "/data/git/.ssh/id_rsa"
-  // }
-
-  // volume {
-  //   source      = "./files/keys/id_rsa.pub"
-  //   destination = "/data/git/.ssh/id_rsa.pub"
-  // }
 
   volume {
     source      = "./files/app"
