@@ -14,8 +14,16 @@ exec_local "waypoint_certs" {
   ]
 }
 
-exec_local "waypoint_secrets" {
-  depends_on = ["exec_local.waypoint_certs"]
+exec_remote "waypoint_secrets" {
+  depends_on = ["k8s_cluster.kubernetes", "exec_local.waypoint_certs"]
+
+  image {
+    name = "shipyardrun/tools:v0.6.0"
+  }
+
+  network {
+    name = "network.cloud"
+  }
 
   cmd = "kubectl"
   args = [
@@ -23,17 +31,28 @@ exec_local "waypoint_secrets" {
     "secret",
     "generic",
     "waypoint-certs",
-    "--from-file=${data("waypoint_certs")}/leaf.cert",
-    "--from-file=${data("waypoint_certs")}/leaf.key"
+    "--from-file=/certs/leaf.cert",
+    "--from-file=/certs/leaf.key"
   ]
 
-  env_var = {
-    KUBECONFIG = "${k8s_config("kubernetes")}"
+  volume {
+    source      = "${shipyard()}/config/kubernetes"
+    destination = "/config"
+  }
+
+  volume {
+    source      = "${data("waypoint_certs")}"
+    destination = "/certs"
+  }
+
+  env {
+    key   = "KUBECONFIG"
+    value = "/config/kubeconfig-docker.yaml"
   }
 }
 
 helm "waypoint" {
-  depends_on = ["exec_local.waypoint_certs"]
+  depends_on = ["exec_remote.waypoint_secrets"]
 
   cluster = "k8s_cluster.kubernetes"
   chart   = "github.com/hashicorp/waypoint-helm"
