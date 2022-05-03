@@ -2,3 +2,4 @@ files/app/.git
 waypoint-restore.db.lock
 data.db
 .kube
+gogs.db
