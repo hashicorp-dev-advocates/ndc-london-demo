@@ -1,19 +1,14 @@
-FROM golang:alpine AS build
+# https://hub.docker.com/_/microsoft-dotnet
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
-# Copy source code and set work dir.
-COPY . $GOPATH/src/app
-WORKDIR $GOPATH/src/app
+WORKDIR /source/aspnetapp
 
-# Get dependencies and build.
-RUN go mod tidy
-RUN go build -o /go/bin/app
+# copy everything else and build app
+COPY . /source/aspnetapp/
+RUN dotnet publish -c release -o /app
 
-FROM alpine
-
-RUN apk add -u bash
-
-# Copy the binary.
-COPY --from=build /go/bin/app /app
-
-# Run.
-ENTRYPOINT ["/app"]
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+COPY --from=build /app ./
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
