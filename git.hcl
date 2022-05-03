@@ -19,14 +19,15 @@ exec_local "gogs_certs" {
   ]
 }
 
-exec_local "setup_repo" {
-  cmd               = "sh"
-  args              = ["-c", "./files/setup_gogs_repos.sh"]
-  working_directory = "${file_dir()}/files/gogs/payments"
+exec_remote "setup_repo" {
+  target = "container.gogs"
+
+  cmd  = "sh"
+  args = ["-c", "/data/gogs/bin/setup_gogs_repos.sh"]
 }
 
 container "gogs" {
-  depends_on = ["exec_local.gogs_certs", "exec_local.setup_repo"]
+  depends_on = ["exec_local.gogs_certs"]
 
   network {
     name       = "network.cloud"
@@ -35,6 +36,11 @@ container "gogs" {
 
   image {
     name = "gogs/gogs:0.12.6"
+  }
+
+  volume {
+    source      = "./files/setup_gogs_repos.sh"
+    destination = "/data/gogs/bin/setup_gogs_repos.sh"
   }
 
   volume {
