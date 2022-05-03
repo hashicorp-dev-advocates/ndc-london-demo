@@ -5,10 +5,11 @@ WORKDIR /source/aspnetapp
 
 # copy everything else and build app
 COPY . /source/aspnetapp/
-RUN dotnet publish -c release -o /app
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+ENTRYPOINT ["dotnet", "Payments.dll"]

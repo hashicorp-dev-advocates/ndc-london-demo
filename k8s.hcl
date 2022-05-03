@@ -1,17 +1,33 @@
+# Build a custom ODR with our certs
+container "waypoint-odr" {
+  network {
+    name = "network.cloud"
+  }
+
+  build {
+    file    = "./Dockerfile"
+    context = "./files/keys"
+  }
+
+  command = ["/kaniko/waypoint"]
+}
+
 k8s_cluster "kubernetes" {
-  driver = "k3s"
+  depends_on = ["container.waypoint-odr"]
+  driver     = "k3s"
 
   network {
     name = "network.cloud"
   }
 
-  // image {
-  //   name = "hashicraft/gogs:v0.0.1"
-  // }
+  image {
+    name = "shipyard.run/localcache/waypoint-odr:latest"
+  }
 
-  // image {
-  //   name = "registry:2"
-  // }
+  volume {
+    source      = "./files/keys/registries.yaml"
+    destination = "/etc/rancher/k3s/registries.yaml"
+  }
 }
 
 output "KUBECONFIG" {

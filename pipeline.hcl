@@ -14,6 +14,7 @@
 //   ]
 // }
 
+
 exec_remote "waypoint_secrets" {
   depends_on = ["k8s_cluster.kubernetes"]
 
@@ -58,9 +59,11 @@ helm "waypoint" {
   chart   = "github.com/hashicorp/waypoint-helm"
 
   values_string = {
-    "server.certs.secretName" = "waypoint-certs"
-    "server.certs.certName"   = "waypoint.cert"
-    "server.certs.keyName"    = "waypoint.key"
+    "server.certs.secretName"     = "waypoint-certs"
+    "server.certs.certName"       = "waypoint.cert"
+    "server.certs.keyName"        = "waypoint.key"
+    "runner.odr.image.repository" = "shipyard.run/localcache/waypoint-odr"
+    "runner.odr.image.tag"        = "latest"
   }
 }
 
