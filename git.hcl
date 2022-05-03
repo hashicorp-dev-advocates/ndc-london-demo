@@ -23,7 +23,7 @@ exec_remote "setup_repo" {
   target = "container.gogs"
 
   cmd  = "sh"
-  args = ["-c", "/data/gogs/bin/setup_gogs_repos.sh"]
+  args = ["-c", "/data/gogs/bin/setup.sh"]
 }
 
 container "gogs" {
