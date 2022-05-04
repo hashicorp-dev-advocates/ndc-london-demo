@@ -43,7 +43,7 @@ container "gogs" {
   port {
     local  = 22
     remote = 22
-    host   = 22
+    host   = 1022
   }
 
   port {

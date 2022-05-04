@@ -26,5 +26,6 @@ RUN ["/kaniko/busybox", "--install", "-s", "/kaniko/bin"]
 # Need to add the dir with our tools in PATH
 ENV PATH $PATH:/kaniko/bin
 ENV TMPDIR /kaniko/tmp
+ENV container docker
 
 ENTRYPOINT ["/kaniko/waypoint"]
