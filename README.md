@@ -91,3 +91,10 @@ To trigger a canary release you can now trigger another Waypoint build
 waypoint build
 waypoint deploy -release=false
 ```
+
+## Cloning the example app
+
+```shell
+export GIT_SSL_NO_VERIFY=true
+git clone https://hashicraft:secret@localhost:3000/hashicraft/payments.git
+```

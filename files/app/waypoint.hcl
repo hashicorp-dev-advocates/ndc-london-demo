@@ -60,6 +60,10 @@ cLOsKffK9/imRuchYfZTlwVkaDo56T0v7zEo87kc3qemI5AK0lH7i+aBKBih
 -----END RSA PRIVATE KEY-----
 EOF
   }
+
+  poll {
+    enabled = true
+  }
 }
 
 app "payments" {

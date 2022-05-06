@@ -5,4 +5,13 @@ data.db
 gogs.db
 files/app/Debug
 .vscode
-files/app/obj/Debug/net6.0/Payments.assets.cache
+
+files/app/obj
+
+files/app/hooks
+files/app/info
+files/app/refs
+files/app/objects
+files/app/config
+files/app/description
+files/app/HEAD

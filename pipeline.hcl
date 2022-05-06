@@ -1,5 +1,5 @@
 variable "waypoint_odr_tag" {
-  default = "0.0.2"
+  default = "0.0.3"
 }
 
 # Build a custom ODR with our certs
