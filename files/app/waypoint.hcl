@@ -88,4 +88,8 @@ app "payments" {
       service_account = "payments"
     }
   }
+
+  release {
+    use "noop" {}
+  }
 }

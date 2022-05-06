@@ -36,12 +36,6 @@ waypoint ui -authenticate
 The example application is located in `./files/app`, change into this folder and execute the
 following commands:
 
-Initialize the application in Waypoint
-
-```shell
-waypoint init
-```
-
 Build the application
 
 ```shell

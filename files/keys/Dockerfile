@@ -4,6 +4,9 @@ RUN apk add ca-certificates
 COPY ./registry.cert  /usr/local/share/ca-certificates/registry.pem
 RUN  update-ca-certificates 
 
+RUN wget https://github.com/hashicorp-dev-advocates/waypoint-plugin-noop/releases/download/v0.1.0/waypoint-plugin-noop_linux_amd64.zip && \
+    unzip waypoint-plugin-noop_linux_amd64.zip
+
 FROM docker.mirror.hashicorp.services/busybox:stable-musl as busybox
 RUN touch /tmp/.keep
 
@@ -12,6 +15,7 @@ RUN touch /tmp/.keep
 
 FROM gcr.io/kaniko-project/executor:v1.6.0 as odr
 
+COPY --from=certs /waypoint-plugin-noop /root/.config/waypoint/plugins/waypoint-plugin-noop
 COPY --from=certs /etc/ssl/certs /kaniko/ssl/certs/
 COPY --from=waypoint /usr/bin/waypoint /kaniko/waypoint
 COPY --from=busybox /bin/busybox /kaniko/busybox
