@@ -4,7 +4,7 @@ RUN apk add ca-certificates
 COPY ./registry.cert  /usr/local/share/ca-certificates/registry.pem
 RUN  update-ca-certificates 
 
-RUN wget https://github.com/hashicorp-dev-advocates/waypoint-plugin-noop/releases/download/v0.1.0/waypoint-plugin-noop_linux_amd64.zip && \
+RUN wget https://github.com/hashicorp-dev-advocates/waypoint-plugin-noop/releases/download/v0.1.2/waypoint-plugin-noop_linux_amd64.zip && \
     unzip waypoint-plugin-noop_linux_amd64.zip
 
 FROM docker.mirror.hashicorp.services/busybox:stable-musl as busybox
@@ -15,7 +15,7 @@ RUN touch /tmp/.keep
 
 FROM gcr.io/kaniko-project/executor:v1.6.0 as odr
 
-COPY --from=certs /waypoint-plugin-noop /root/.config/waypoint/plugins/waypoint-plugin-noop
+COPY --from=certs /waypoint-plugin-noop /waypoint/plugins/waypoint-plugin-noop
 COPY --from=certs /etc/ssl/certs /kaniko/ssl/certs/
 COPY --from=waypoint /usr/bin/waypoint /kaniko/waypoint
 COPY --from=busybox /bin/busybox /kaniko/busybox
@@ -26,10 +26,10 @@ COPY --from=busybox /tmp /kaniko/tmp
 RUN ["/kaniko/busybox", "mkdir", "/kaniko/bin"]
 RUN ["/kaniko/busybox", "--install", "-s", "/kaniko/bin"]
 
-
 # Need to add the dir with our tools in PATH
 ENV PATH $PATH:/kaniko/bin
 ENV TMPDIR /kaniko/tmp
 ENV container docker
+ENV XDG_CONFIG_HOME "/"
 
 ENTRYPOINT ["/kaniko/waypoint"]

@@ -24,7 +24,7 @@ EOF
 }
 
 exec_remote "waypoint_app" {
-  depends_on = ["module.consul", "helm.waypoint"]
+  depends_on = ["module.consul", "helm.waypoint", "template.waypoint_app"]
 
   image {
     name = "shipyardrun/hashicorp-tools:v0.7.0"
@@ -63,7 +63,7 @@ exec_remote "waypoint_app" {
 }
 
 container "waypoint_app" {
-  depends_on = ["module.consul", "helm.waypoint"]
+  depends_on = ["module.consul", "helm.waypoint", "template.waypoint_app"]
 
   image {
     name = "shipyardrun/hashicorp-tools:v0.7.0"
