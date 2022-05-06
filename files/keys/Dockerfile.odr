@@ -1,0 +1,10 @@
+FROM hashicorp/waypoint-odr:latest
+SHELL ["/kaniko/bin/sh", "-c"]
+
+COPY ./registry.cert  /kaniko/ssl/certs/registry.pem
+RUN cat /kaniko/ssl/certs/registry.pem >> /kaniko/ssl/certs/ca-certificates.crt
+
+RUN wget https://github.com/hashicorp-dev-advocates/waypoint-plugin-noop/releases/download/v0.2.0/waypoint-plugin-noop_linux_amd64.zip && \
+    unzip waypoint-plugin-noop_linux_amd64.zip
+RUN mkdir -p ~/.config/waypoint/plugins/
+RUN cp waypoint-plugin-noop ~/.config/waypoint/plugins/waypoint-plugin-noop

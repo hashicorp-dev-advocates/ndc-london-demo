@@ -5,7 +5,7 @@ container "waypoint-odr" {
   }
 
   build {
-    file    = "./Dockerfile"
+    file    = "./Dockerfile.odr"
     context = "./files/keys"
   }
 
