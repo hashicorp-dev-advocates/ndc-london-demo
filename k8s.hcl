@@ -1,16 +1,4 @@
-# Build a custom ODR with our certs
-container "waypoint-odr" {
-  network {
-    name = "network.cloud"
-  }
 
-  build {
-    file    = "./Dockerfile.odr"
-    context = "./files/keys"
-  }
-
-  command = ["/kaniko/waypoint"]
-}
 
 k8s_cluster "kubernetes" {
   depends_on = ["container.waypoint-odr"]
@@ -21,7 +9,7 @@ k8s_cluster "kubernetes" {
   }
 
   image {
-    name = "shipyard.run/localcache/waypoint-odr:latest"
+    name = "shipyard.run/localcache/waypoint-odr:${var.waypoint_odr_tag}"
   }
 
   volume {

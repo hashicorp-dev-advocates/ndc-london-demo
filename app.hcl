@@ -15,7 +15,7 @@ template "waypoint_app" {
 cd /app
 waypoint login --from-kubernetes ${shipyard_ip()}:9701
 waypoint init
-sleep 5
+sleep 20
 waypoint build
 waypoint deploy -release=false
 EOF
@@ -24,7 +24,7 @@ EOF
 }
 
 exec_remote "waypoint_app" {
-  depends_on = ["module.consul", "helm.waypoint", "template.waypoint_app"]
+  depends_on = ["module.consul", "helm.waypoint", "template.waypoint_app", "k8s_config.app"]
 
   image {
     name = "shipyardrun/hashicorp-tools:v0.7.0"

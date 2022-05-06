@@ -1,19 +1,21 @@
-// exec_local "waypoint_certs" {
-//   cmd = "shipyard"
-//   args = [
-//     "connector",
-//     "generate-certs",
-//     "${data("waypoint_certs")}",
-//     "--leaf",
-//     "--root-ca",
-//     "${shipyard()}/certs/root.cert",
-//     "--root-key",
-//     "${shipyard()}/certs/root.key",
-//     "--dns-name",
-//     "waypoint"
-//   ]
-// }
+variable "waypoint_odr_tag" {
+  default = "0.0.2"
+}
 
+# Build a custom ODR with our certs
+container "waypoint-odr" {
+  network {
+    name = "network.cloud"
+  }
+
+  build {
+    file    = "./Dockerfile.odr"
+    context = "./files/keys"
+    tag     = var.waypoint_odr_tag
+  }
+
+  command = ["/kaniko/waypoint"]
+}
 
 exec_remote "waypoint_secrets" {
   depends_on = ["k8s_cluster.kubernetes"]
@@ -63,7 +65,7 @@ helm "waypoint" {
     "server.certs.certName"       = "waypoint.cert"
     "server.certs.keyName"        = "waypoint.key"
     "runner.odr.image.repository" = "shipyard.run/localcache/waypoint-odr"
-    "runner.odr.image.tag"        = "latest"
+    "runner.odr.image.tag"        = var.waypoint_odr_tag
   }
 }
 

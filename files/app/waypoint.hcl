@@ -76,19 +76,18 @@ app "payments" {
   }
 
   deploy {
-    use "noop" {}
-    // use "kubernetes" {
-    //   annotations = {
-    //     "consul.hashicorp.com/connect-inject"  = "true"
-    //     "consul.hashicorp.com/connect-service" = "payments"
-    //   }
+    use "kubernetes" {
+      annotations = {
+        "consul.hashicorp.com/connect-inject"  = "true"
+        "consul.hashicorp.com/connect-service" = "payments"
+      }
 
-    //   labels = {
-    //     "group" = "payments"
-    //   }
+      labels = {
+        "group" = "payments"
+      }
 
-    //   service_account = "payments"
-    // }
+      service_account = "payments"
+    }
   }
 
   release {
