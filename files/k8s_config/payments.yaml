@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments
+  labels:
+    app: metrics
+spec:
+  selector:
+    group: payments
+  ports:
+    - name: http
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+    - name: metrics # prom scraping port
+      protocol: TCP
+      port: 20200
+      targetPort: 20200
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: payments
+automountServiceAccountToken: true
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: payments
+spec:
+  destination:
+    name: payments
+  sources:
+    - name: api
+      action: allow
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: payments
+spec:
+  protocol: http

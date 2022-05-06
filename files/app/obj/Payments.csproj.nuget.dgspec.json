@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/gogs/payments/Payments/Payments.csproj": {}
+    "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/app/Payments.csproj": {}
   },
   "projects": {
-    "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/gogs/payments/Payments/Payments.csproj": {
+    "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/app/Payments.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/gogs/payments/Payments/Payments.csproj",
+        "projectUniqueName": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/app/Payments.csproj",
         "projectName": "Payments",
-        "projectPath": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/gogs/payments/Payments/Payments.csproj",
+        "projectPath": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/app/Payments.csproj",
         "packagesPath": "/home/nicj/.nuget/packages/",
-        "outputPath": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/gogs/payments/Payments/obj/",
+        "outputPath": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/app/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/nicj/.nuget/NuGet/NuGet.Config"

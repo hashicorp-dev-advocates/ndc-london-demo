@@ -3,3 +3,5 @@ waypoint-restore.db.lock
 data.db
 .kube
 gogs.db
+files/app/Debug
+.vscode

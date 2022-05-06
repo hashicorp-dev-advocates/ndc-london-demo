@@ -13,7 +13,7 @@
           "buildMultiTargeting/Microsoft.Extensions.ApiDescription.Server.targets": {}
         }
       },
-      "Microsoft.OpenApi/1.3.1": {
+      "Microsoft.OpenApi/1.2.3": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {}
@@ -213,11 +213,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/gogs/payments/Payments/Payments.csproj",
+      "projectUniqueName": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/app/Payments.csproj",
       "projectName": "Payments",
-      "projectPath": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/gogs/payments/Payments/Payments.csproj",
+      "projectPath": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/app/Payments.csproj",
       "packagesPath": "/home/nicj/.nuget/packages/",
-      "outputPath": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/gogs/payments/Payments/obj/",
+      "outputPath": "/home/nicj/go/src/github.com/hashicorp-dev-advocates/ndc-london-demo/files/app/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/nicj/.nuget/NuGet/NuGet.Config"

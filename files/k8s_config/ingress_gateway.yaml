@@ -1,0 +1,24 @@
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: ingress-gateway
+spec:
+  destination:
+    name: ingress-gateway
+  sources:
+    - name: '*'
+      action: allow
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: IngressGateway
+metadata:
+  name: ingress-gateway
+spec:
+  listeners:
+    - port: 18080
+      protocol: http
+      services:
+        - name: api
+          hosts: ["*"]

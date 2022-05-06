@@ -76,18 +76,6 @@ k8s_ingress "waypoint" {
   }
 
   port {
-    local  = 80
-    remote = 80
-    host   = 8080
-  }
-
-  port {
-    local  = 443
-    remote = 443
-    host   = 8443
-  }
-
-  port {
     local  = 9701
     remote = 9701
     host   = 9701

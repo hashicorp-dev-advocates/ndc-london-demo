@@ -75,6 +75,17 @@ app "payments" {
   }
 
   deploy {
-    use "kubernetes" {}
+    use "kubernetes" {
+      annotations = {
+        "consul.hashicorp.com/connect-inject"  = "true"
+        "consul.hashicorp.com/connect-service" = "payments"
+      }
+
+      labels = {
+        "group" = "payments"
+      }
+
+      service_account = "payments"
+    }
   }
 }
