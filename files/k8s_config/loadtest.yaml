@@ -48,7 +48,7 @@ data:
       }
       
       // our HTTP request, note that we are saving the response to res, which can be accessed later
-      const res = http.get('http://consul-ingress-gateway.consul.svc:18080/v1/weather');
+      const res = http.post('http://consul-ingress-gateway.consul.svc:18080/v1/pay');
       
       const checkRes = check(res, {
         'status is 200': (r) => r.status === 200,

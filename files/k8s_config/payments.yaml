@@ -44,3 +44,23 @@ metadata:
   name: payments
 spec:
   protocol: http
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: payments-db
+spec:
+  protocol: tcp
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: payments-db
+spec:
+  destination:
+    name: payments-db
+  sources:
+    - name: payments
+      action: allow

@@ -1,4 +1,4 @@
-k8s_config "app" {
+k8s_config "payments" {
   depends_on = ["module.consul"]
 
   cluster = "k8s_cluster.kubernetes"
@@ -9,22 +9,18 @@ k8s_config "app" {
   wait_until_ready = true
 }
 
-template "waypoint_app" {
+template "waypoint_payments" {
   source = <<EOF
 #!/bin/sh -e
-cd /app
 waypoint login --from-kubernetes ${shipyard_ip()}:9701
 waypoint init
-sleep 20
-waypoint build
-waypoint deploy -release=false
 EOF
 
-  destination = "${data("waypoint")}/install_app.sh"
+  destination = "${data("waypoint")}/install_payments.sh"
 }
 
-exec_remote "waypoint_app" {
-  depends_on = ["module.consul", "helm.waypoint", "template.waypoint_app", "k8s_config.app"]
+exec_remote "waypoint_payments" {
+  depends_on = ["module.consul", "helm.waypoint", "template.waypoint_payments", "k8s_config.payments"]
 
   image {
     name = "shipyardrun/hashicorp-tools:v0.7.0"
@@ -34,9 +30,11 @@ exec_remote "waypoint_app" {
     name = "network.cloud"
   }
 
+  working_directory = "/payments"
+
   cmd = "bash"
   args = [
-    "/files/install_app.sh",
+    "/files/install_payments.sh",
   ]
 
   volume {
@@ -47,8 +45,8 @@ exec_remote "waypoint_app" {
   }
 
   volume {
-    source      = "./files/app"
-    destination = "/app"
+    source      = "./files/payments"
+    destination = "/payments"
   }
 
   volume {
@@ -62,8 +60,8 @@ exec_remote "waypoint_app" {
   }
 }
 
-container "waypoint_app" {
-  depends_on = ["module.consul", "helm.waypoint", "template.waypoint_app"]
+container "waypoint_payments" {
+  depends_on = ["module.consul", "helm.waypoint", "template.waypoint_payments"]
 
   image {
     name = "shipyardrun/hashicorp-tools:v0.7.0"
@@ -85,8 +83,8 @@ container "waypoint_app" {
   }
 
   volume {
-    source      = "./files/app"
-    destination = "/app"
+    source      = "./files/payments"
+    destination = "/payments"
   }
 
   volume {

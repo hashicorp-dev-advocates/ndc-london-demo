@@ -73,15 +73,13 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: api
-          image: nicholasjackson/canary-api:0.0.5
+          image: nicholasjackson/canary-api:0.0.6
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
           env:
             - name: "PAYMENTS"
-              value: "http://localhost:9091"
-            - name: "WEATHER"
-              value: "http://localhost:9091/WeatherForecast"
+              value: "http://localhost:9091/Payments"
           readinessProbe:
             httpGet:
               path: /ready

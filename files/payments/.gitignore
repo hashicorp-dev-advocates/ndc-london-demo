@@ -1,0 +1,7 @@
+waypoint-restore.db.lock
+data.db
+.kube
+.vscode
+obj
+bin
+.waypoint

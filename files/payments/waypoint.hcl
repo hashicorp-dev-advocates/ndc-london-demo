@@ -82,8 +82,9 @@ app "payments" {
   deploy {
     use "kubernetes" {
       annotations = {
-        "consul.hashicorp.com/connect-inject"  = "true"
-        "consul.hashicorp.com/connect-service" = "payments"
+        "consul.hashicorp.com/connect-inject"            = "true"
+        "consul.hashicorp.com/connect-service"           = "payments"
+        "consul.hashicorp.com/connect-service-upstreams" = "payments-db:5432"
       }
 
       labels = {

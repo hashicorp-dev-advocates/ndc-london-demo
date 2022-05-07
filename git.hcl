@@ -1,3 +1,36 @@
+template "gogs_payments" {
+  source = <<EOF
+# Copy payments source to a temp folder to create a new git repo
+mkdir -p /data/tmp_payments
+cp -r /payments/* /data/tmp_payments
+
+git config --global init.defaultBranch main
+git config --global user.email "admin@hashicraft.com"
+git config --global user.name "Barry"
+
+# create the base gogs payments repo
+mkdir -p /data/git/gogs-repositories/hashicraft/payments.git
+cd /data/git/gogs-repositories/hashicraft/payments.git
+git init --bare
+
+# add the payments source to the gogs repo
+cd /data/tmp_payments
+
+# create the repo and initial commit
+git init
+git add .
+git commit -m "Initial commit"
+
+# add the remote
+git remote add origin https://hashicraft:secret@localhost:3000/hashicraft/payments.git
+
+# push the repo to gogs
+GIT_SSL_NO_VERIFY=true git push --set-upstream origin main
+EOF
+
+  destination = "${data("gogs")}/init_payments.sh"
+}
+
 container "gogs" {
   network {
     name       = "network.cloud"
@@ -8,6 +41,11 @@ container "gogs" {
 
   image {
     name = "gogs/gogs:0.12.6"
+  }
+
+  volume {
+    source      = "${data("gogs")}/init_payments.sh"
+    destination = "/data/gogs/bin/init_payments.sh"
   }
 
   volume {
@@ -36,8 +74,8 @@ container "gogs" {
   }
 
   volume {
-    source      = "./files/app"
-    destination = "/data/git/gogs-repositories/hashicraft/payments.git"
+    source      = "./files/payments"
+    destination = "/payments"
   }
 
   port {
@@ -51,4 +89,14 @@ container "gogs" {
     remote = 3000
     host   = 3000
   }
+}
+
+exec_remote "gogs_payments" {
+  depends_on = ["template.gogs_payments", "container.gogs"]
+  target     = "container.gogs"
+
+  cmd = "bash"
+  args = [
+    "/data/gogs/bin/init_payments.sh",
+  ]
 }
