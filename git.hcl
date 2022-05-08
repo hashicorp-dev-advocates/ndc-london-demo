@@ -13,6 +13,9 @@ mkdir -p /data/git/gogs-repositories/hashicraft/payments.git
 cd /data/git/gogs-repositories/hashicraft/payments.git
 git init --bare
 
+chown git -R /data/git/gogs-repositories
+chgrp git -R /data/git/gogs-repositories
+
 # add the payments source to the gogs repo
 cd /data/tmp_payments
 
@@ -88,6 +91,11 @@ container "gogs" {
     local  = 3000
     remote = 3000
     host   = 3000
+  }
+
+  health_check {
+    timeout = "60s"
+    http    = "https://localhost:3000"
   }
 }
 
