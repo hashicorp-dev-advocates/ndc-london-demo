@@ -97,3 +97,23 @@ container "waypoint_payments" {
     value = "/config/kubeconfig-docker.yaml"
   }
 }
+
+ingress "payments_db" {
+  source {
+    driver = "local"
+    
+    config {
+      port = 5432
+    }
+  }
+  
+  destination {
+    driver = "k8s"
+    
+    config {
+      cluster = "k8s_cluster.kubernetes"
+      address = "payments-db.default.svc"
+      port = 5432
+    }
+  }
+}
