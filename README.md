@@ -57,6 +57,12 @@ http://localhost:8080/d/sdfsdfsdf/application-dashboard?orgId=1&refresh=10s
 ## Manually deploying the canary release
 
 * Make a change to the application
+
+```shell
+export GIT_SSL_NO_VERIFY=true
+git clone https://localhost:3000/hashicraft/payments.git
+```
+
 * Add a service resolver to consul (CRD)
 
 ```shell
