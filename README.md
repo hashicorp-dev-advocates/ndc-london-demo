@@ -33,19 +33,13 @@ waypoint ui -authenticate
 
 ## Deploying the Payments application to Waypoint
 
-The example application is located in `./files/app`, change into this folder and execute the
+The example application is located in `./files/payments`, change into this folder and execute the
 following commands:
 
-Build the application
+Build and deploy the application
 
 ```shell
-waypoint build
-```
-
-Deploy the application
-
-```shell
-waypoint deploy -release=false
+waypoint up
 ```
 
 Once complete the application will be deployed to Kubernetes, you can test it using
@@ -60,7 +54,41 @@ be seen in the Grafana dashboard:
 
 http://localhost:8080/d/sdfsdfsdf/application-dashboard?orgId=1&refresh=10s
 
-## Deploying the canary release
+## Manually deploying the canary release
+
+* Make a change to the application
+* Add a service resolver to consul (CRD)
+
+```shell
+kubectl apply -f ./files/k8s_config/consul/service-resolver.yaml
+```
+
+* Add a service splitter to consul (CRD)
+
+```shell
+kubectl apply -f ./files/k8s_config/consul/service-splitter.yaml
+```
+
+* Deploy the new version of the application
+
+```shell
+git add .
+git commit -m "deploying canary"
+git push
+```
+
+* Wait for waypoint to build and deploy the new version of the application
+* Look at grafana to see the health of the application
+* Continuously ramp up traffic until all traffic goes to the new version
+* If everything looks healthy after a couple of hours, delete the previous deployment
+
+```shell
+waypoint deployment list
+
+waypoint deployment destroy 1
+```
+
+## Automating the canary release deployment
 
 To deploy a canary release, first install the configuration for Consul release controller
 

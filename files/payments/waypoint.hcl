@@ -68,7 +68,6 @@ EOF
 
 app "payments" {
   build {
-    // use "noop" {}
     use "docker" {}
 
     registry {
@@ -85,6 +84,7 @@ app "payments" {
         "consul.hashicorp.com/connect-inject"            = "true"
         "consul.hashicorp.com/connect-service"           = "payments"
         "consul.hashicorp.com/connect-service-upstreams" = "payments-db:5432"
+        "consul.hashicorp.com/service-meta-version"      = "v1"
       }
 
       labels = {

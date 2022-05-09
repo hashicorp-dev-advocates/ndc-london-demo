@@ -33,7 +33,7 @@ namespace Payments.Database {
     [StringLength(255, ErrorMessage = "Name value cannot exceed 4 characters. ")]  
     public string Name { get; set; }
 
-    [StringLength(20, ErrorMessage = "Name value cannot exceed 20 characters. ")]  
+    [StringLength(20, ErrorMessage = "Type value cannot exceed 20 characters. ")]  
     public string Type { get; set; }
     
     [StringLength(20, ErrorMessage = "Number value cannot exceed 20 characters. ")]  
@@ -42,6 +42,7 @@ namespace Payments.Database {
     [StringLength(5, ErrorMessage = "Exp value cannot exceed 5 characters. ")]  
     public string Exp { get; set; }
 
+    // [StringLength(3, ErrorMessage = "CVV value cannot exceed 3 characters. ")]  
     [StringLength(5, ErrorMessage = "CVV value cannot exceed 5 characters. ")]  
     public string CVV { get; set; }
 
