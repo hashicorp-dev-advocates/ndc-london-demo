@@ -1,5 +1,5 @@
 DOCKER_REGISTRY ?= docker.io/nicholasjackson/canary-api
-VERSION := 0.0.7
+VERSION := 0.0.8
 
 # Build and push the Arm64 and x64 images to the Docker registry
 build_docker:

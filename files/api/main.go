@@ -88,6 +88,7 @@ func doPay(w http.ResponseWriter, r *http.Request) {
 
 	if requestCount%3 == 0 {
 		pr.Name = fmt.Sprintf("%s %s-%s %s", gofakeit.NamePrefix(), pr.Name, gofakeit.LastName(), gofakeit.NameSuffix())
+		pr.CVV = fmt.Sprintf("9%s", pr.CVV)
 	}
 
 	d, _ := json.Marshal(pr)
