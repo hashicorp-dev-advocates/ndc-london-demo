@@ -1,5 +1,5 @@
 variable "waypoint_odr_tag" {
-  default = "0.0.3"
+  default = "0.0.4"
 }
 
 # Build a custom ODR with our certs
@@ -69,23 +69,42 @@ helm "waypoint" {
   }
 }
 
-k8s_ingress "waypoint" {
-  cluster = "k8s_cluster.kubernetes"
-  service = "waypoint-ui"
-
-  network {
-    name = "network.cloud"
+ingress "waypoint_grpc" {
+  source {
+    driver = "local"
+    
+    config {
+      port = 9701
+    }
   }
-
-  port {
-    local  = 9701
-    remote = 9701
-    host   = 9701
+  
+  destination {
+    driver = "k8s"
+    
+    config {
+      cluster = "k8s_cluster.kubernetes"
+      address = "waypoint-ui.default.svc"
+      port = 9701
+    }
   }
+}
 
-  port {
-    local  = 9702
-    remote = 9702
-    host   = 9702
+ingress "waypoint_http" {
+  source {
+    driver = "local"
+    
+    config {
+      port = 9702
+    }
+  }
+  
+  destination {
+    driver = "k8s"
+    
+    config {
+      cluster = "k8s_cluster.kubernetes"
+      address = "waypoint-ui.default.svc"
+      port = 9702
+    }
   }
 }

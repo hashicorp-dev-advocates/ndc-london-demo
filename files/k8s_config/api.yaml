@@ -53,7 +53,7 @@ metadata:
   labels:
     app: api_v1
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: api
@@ -73,7 +73,7 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: api
-          image: nicholasjackson/canary-api:0.0.6
+          image: nicholasjackson/canary-api:0.0.7
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000

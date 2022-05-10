@@ -35,7 +35,7 @@ data:
     // you can specify stages of your test (ramp up/down patterns) through the options object
     // target is the number of VUs you are aiming for
     export const options = {
-      vus: 10,
+      vus: 2,
       duration: '30m',
     };
 

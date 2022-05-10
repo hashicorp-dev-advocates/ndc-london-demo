@@ -7,6 +7,8 @@ ENV PATH="${PATH}:/kaniko"
 ENV SSL_CERT_DIR=/kaniko/ssl/certs
 ENV DOCKER_CONFIG /kaniko/.docker/
 ENV XDG_CONFIG_HOME=/kaniko/.config/
+ENV TMPDIR /kaniko/tmp
+ENV container docker
 
 COPY ./registry.cert  /kaniko/ssl/certs/registry.pem
 RUN cat /kaniko/ssl/certs/registry.pem >> /kaniko/ssl/certs/ca-certificates.crt

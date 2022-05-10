@@ -12,7 +12,7 @@ spec:
   runtime:
     pluginName: "kubernetes"
     config:
-      deployment: "payments-(.*)"
+      deployment: "payments-v(.*)"
   strategy:
     pluginName: "canary"
     config:

@@ -86,7 +86,7 @@ func doPay(w http.ResponseWriter, r *http.Request) {
 	}
 	mutex.Unlock()
 
-	if requestCount%10 == 0 {
+	if requestCount%3 == 0 {
 		pr.Name = fmt.Sprintf("%s %s-%s %s", gofakeit.NamePrefix(), pr.Name, gofakeit.LastName(), gofakeit.NameSuffix())
 	}
 
